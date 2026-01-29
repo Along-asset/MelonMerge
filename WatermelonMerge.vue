@@ -40,6 +40,19 @@
         <canvas ref="canvasRef" class="wm-canvas"></canvas>
 
         <transition name="wm-fade">
+          <div v-if="phase === 'loading'" class="wm-overlay">
+            <div class="wm-modal">
+              <div class="wm-modal-title wm-modal-title--cyber">资源加载中</div>
+              <div class="wm-loading-bar-container">
+                <div class="wm-loading-bar" :style="{ width: loadingProgress + '%' }"></div>
+              </div>
+              <div class="wm-loading-text">{{ loadingProgress }}%</div>
+              <div v-if="loadingError" class="wm-loading-error">{{ loadingError }}</div>
+            </div>
+          </div>
+        </transition>
+
+        <transition name="wm-fade">
           <div v-if="phase === 'start'" class="wm-overlay">
             <div class="wm-modal">
               <div class="wm-modal-title wm-modal-title--cyber wm-glitch" data-text="赛博大西瓜">赛博大西瓜</div>
@@ -1780,6 +1793,37 @@ onUnmounted(() => {
 
 .wm-primary:hover {
   border-color: rgba(0, 255, 255, 0.42);
+}
+
+.wm-loading-bar-container {
+  width: 240px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  margin: 20px 0 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.wm-loading-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00c8ff, #bf5af2);
+  width: 0%;
+  transition: width 0.2s ease;
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+}
+
+.wm-loading-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 14px;
+  color: rgba(0, 255, 255, 0.8);
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+.wm-loading-error {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #ff2d55;
 }
 
 .wm-fade-enter-active,
